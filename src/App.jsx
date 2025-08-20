@@ -135,19 +135,18 @@ function App() {
         <button className="btn-calcular" type="submit">Calcular</button>
         <button className="btn-limpiar" type="button" onClick={handleReset}>Limpiar campos</button>
 
-        <p className="texto">El semáforo ecológico te indica si tu huella de carbono es menor, igual o mayor al valor esperado para una persona durante un año de consumo y producción de desechos</p>
-
         {resultado !== null && (
           <div className="resultado-container">
-            <img 
-              src="/img/semaforo.jpg" 
-              alt="Resultado" 
-              className="resultado-imagen"
-            />
-            <div className="resultado-textos">
-              <p className="resultado-numero">{resultado.toFixed(2)}</p>
-              <p className="resultado-mensaje">{mensaje()}</p>
+            <p className="texto">El semáforo ecológico te indica si tu huella de carbono es menor, igual o mayor al valor esperado para una persona durante un año de consumo y producción de desechos</p>
+            <div className="resultado-row">
+              <img className="resultado-imagen" src="/img/semaforo.jpg" alt="Resultado"/>
+
+              <div className="resultado-textos">
+                <p className="resultado-numero">{resultado.toFixed(2)}</p>
+                <p className="resultado-mensaje">{mensaje()}</p>
+              </div>
             </div>
+            
           </div>
         )}
 

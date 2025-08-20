@@ -1,32 +1,36 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
 body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
   background-color: rgb(122, 201, 204);
+  margin: 0;
+  font-family: system-ui;
 }
 
 .app-container {
   background-color: rgb(122, 201, 204);
   width: 100%; 
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 20px;
-  text-align: center;
 }
 
 .formulario {
   background-color: aliceblue;
-  padding: 35px 35px;
+  padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);     
-  width: 500px;
+  width: 100%;         
+  max-width: 500px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .titulo {
@@ -37,8 +41,9 @@ body {
 
 .texto {
   background-color: #cce7f0;
-  padding: 15px;
+  padding: 1rem;
   border-radius: 6px;
+  text-align: center;
 }
 
 label {
@@ -58,7 +63,7 @@ input {
 .btn-calcular{
   background-color: #0077b6;
   color: white;
-  padding: 10px 18px;
+  padding: 0.7rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -74,7 +79,7 @@ input {
 .btn-limpiar {
   background-color: #e9ecef;
   color: #333;
-  padding: 10px 18px;
+  padding: 0.7rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -90,30 +95,41 @@ input {
 .resultado-container {
   display: flex;
   align-items: center;  
-  gap: 15px;
-  margin-top: 20px;
+  gap: 0.5rem;
   justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.resultado-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%
 }
 
 .resultado-imagen {
-  width: 200px;
+  width: 40%;
+  max-width: 150px;
   height: auto;
 }
 
 .resultado-textos {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
 }
 
 .resultado-numero {
-  font-size: larger;
+  font-size: 1.5rem;
   font-weight: bold;
   margin: 0;
 }
 
 .resultado-mensaje {
-  font-size: x-large;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin: 4px 0 0 0;
+  margin: 0;
 }
