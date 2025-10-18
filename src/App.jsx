@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import { supabase } from './supabaseClient.js'
 
 function App() {
   const [combustible, setCombustible] = useState("");
@@ -24,9 +25,12 @@ function App() {
   const [resultado, setResultado] = useState(null);
   const [showResultado, setShowResultado] = useState(false);
 
-  const handleSubmit = (e) => {
+  const [estadisticas, setEstadisticas] = useState(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //Calcular resultado
     const combustibleNum = parseFloat(combustible);
     const gasNum = parseFloat(gas);
     const luzNum = parseFloat(luz);
@@ -47,6 +51,57 @@ function App() {
 
     setResultado(resultado);
     setShowResultado(true);
+
+    //Actualizar columnas
+    let columna = '';
+    if (resultado > 4000) columna = 'rojo';
+    else if(resultado == 4000) columna = 'amarillo';
+    else columna = 'verde';
+
+    const {data: currentData, error: fetchError } = await supabase
+      .from ('estadisticas')
+      .select('total, rojo, amarillo, verde')
+      .eq('id', 1)
+      .single();
+    if (fetchError) console.error('Error fetching current data: ', fetchError);
+    else console.log('Current data fetched');
+
+    const newData = {
+      total: currentData.total + 1,
+      rojo: columna === 'rojo' ? currentData.rojo + 1 : currentData.rojo,
+      amarillo: columna === 'amarillo' ? currentData.amarillo + 1 : currentData.amarillo,
+      verde: columna === 'verde' ? currentData.verde + 1 : currentData.verde,
+      ult_actualizacion: new Date().toISOString(),
+    }
+
+    const { error: updateError } = await supabase
+      .from('estadisticas')
+      .update(newData)
+      .eq('id', 1);
+    if(updateError) console.error('Error updating data: ', updateError);
+    else console.log('Data updated: ', newData);
+
+    //Consultar columnas
+    const { data: selectData, error: selectError} = await supabase
+      .from('estadisticas')
+      .select('total, rojo, amarillo, verde')
+      .eq('id', 1)
+      .single();
+    if(selectError) console.error('Error fetching data: ', selectError);
+    else {
+      const { total, rojo, amarillo, verde } = selectData;
+      const porcentajeRojo = (rojo * 100) / total;
+      const porcentajeAmarillo = (amarillo * 100) / total;
+      const porcentajeVerde = (verde * 100) / total;
+
+      setEstadisticas({
+        porcentajeRojo,
+        porcentajeAmarillo,
+        porcentajeVerde,
+      });
+      console.log('Data fetched: ', selectData);
+    }
+      
   }
 
   const handleReset = () => {
@@ -60,9 +115,9 @@ function App() {
   };
 
   const mensaje = () => {
-    if (resultado > 4000) return "MAYOR A 4000, EXCEDIDO 🔴";
-    if(resultado == 4000) return "IGUAL A 4000, NORMAL 🟠"
-    if(resultado < 4000) return "MENOR A 4000, OK 🟢"
+    if (resultado > 4000) return "MAYOR A 4000, EXCEDIDO🔴";
+    if(resultado == 4000) return "IGUAL A 4000, NORMAL🟡"
+    if(resultado < 4000) return "MENOR A 4000, OK🟢"
   }
 
   return (
@@ -149,7 +204,28 @@ function App() {
           </div>
         )}
 
-        
+        {estadisticas && (
+          <div className="estadisticas-container">
+            <h2 className="estadisticas-titulo">Estadíscas generales</h2>
+            <table className="estadisticas-table">
+              <tbody>
+                <tr>
+                  <td>Rojo🔴</td>
+                  <td>{estadisticas.porcentajeRojo.toFixed(1)}%</td>
+                </tr>
+                <tr>
+                  <td>Amarillo🟡</td>
+                  <td>{estadisticas.porcentajeAmarillo.toFixed(1)}%</td>
+                </tr>
+                <tr>
+                  <td>Verde🟢</td>
+                  <td>{estadisticas.porcentajeVerde.toFixed(1)}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+         
       </form>
 
     </div>
