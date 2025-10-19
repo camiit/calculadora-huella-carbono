@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { supabase } from './supabaseClient.js'
@@ -10,22 +10,39 @@ function App() {
   const [basura, setBasura] = useState("");
   const [personas, setPersonas] = useState("");
 
-  const [combustibleM, setCombustibleM] = useState(0);
-  const [gasM, setGasM] = useState("");
-  const [luzM,setLuzM] = useState("");
-  const [basuraM, setBasuraM] = useState("");
-  const [personasM, setPersonasM] = useState("");
-
-  const [combustibleA, setCombustibleA] = useState(0);
-  const [gasA, setGasA] = useState("");
-  const [luzA,setLuzA] = useState("");
-  const [basuraA, setBasuraA] = useState("");
-  const [personasA, setPersonasA] = useState("");
-
   const [resultado, setResultado] = useState(null);
   const [showResultado, setShowResultado] = useState(false);
 
   const [estadisticas, setEstadisticas] = useState(null);
+
+  //Consultar columnas
+  const fetchEstadisticas = async () => {
+    const { data: selectData, error: selectError} = await supabase
+      .from('estadisticas')
+      .select('total, rojo, amarillo, verde')
+      .eq('id', 1)
+      .single();
+
+    if(selectError) console.error('Error fetching data: ', selectError);
+    else{
+      const { total, rojo, amarillo, verde } = selectData;
+      const porcentajeRojo = total > 0 ? (rojo * 100) / total : 0;
+      const porcentajeAmarillo = total > 0 ? (amarillo * 100) / total : 0;
+      const porcentajeVerde = total > 0 ? (verde * 100) / total : 0;
+
+      setEstadisticas({
+        porcentajeRojo,
+        porcentajeAmarillo,
+        porcentajeVerde,
+      });
+      console.log('Data fetched: ', selectData);
+    } 
+  };
+  
+  //Cargar estadisticas
+  useEffect(() => {
+    fetchEstadisticas();
+  }, []);  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,27 +98,8 @@ function App() {
     if(updateError) console.error('Error updating data: ', updateError);
     else console.log('Data updated: ', newData);
 
-    //Consultar columnas
-    const { data: selectData, error: selectError} = await supabase
-      .from('estadisticas')
-      .select('total, rojo, amarillo, verde')
-      .eq('id', 1)
-      .single();
-    if(selectError) console.error('Error fetching data: ', selectError);
-    else {
-      const { total, rojo, amarillo, verde } = selectData;
-      const porcentajeRojo = (rojo * 100) / total;
-      const porcentajeAmarillo = (amarillo * 100) / total;
-      const porcentajeVerde = (verde * 100) / total;
+    await fetchEstadisticas();
 
-      setEstadisticas({
-        porcentajeRojo,
-        porcentajeAmarillo,
-        porcentajeVerde,
-      });
-      console.log('Data fetched: ', selectData);
-    }
-      
   }
 
   const handleReset = () => {
@@ -189,7 +187,7 @@ function App() {
         <button className="btn-calcular" type="submit">Calcular</button>
         <button className="btn-limpiar" type="button" onClick={handleReset}>Limpiar campos</button>
 
-        {resultado !== null && (
+        {showResultado && resultado !== null && (
           <div className="resultado-container">
             <p className="texto">El semáforo ecológico te indica si tu huella de carbono es menor, igual o mayor al valor esperado para una persona durante un año de consumo y producción de desechos</p>
             <div className="resultado-row">
@@ -199,8 +197,7 @@ function App() {
                 <p className="resultado-numero">{resultado.toFixed(2)}</p>
                 <p className="resultado-mensaje">{mensaje()}</p>
               </div>
-            </div>
-            
+            </div> 
           </div>
         )}
 
@@ -225,7 +222,7 @@ function App() {
             </table>
           </div>
         )}
-         
+
       </form>
 
     </div>
