@@ -123,7 +123,7 @@ function App() {
 
       <form onSubmit={handleSubmit} className="formulario" >
         <h1 className="titulo">Calculadora Huella de Carbono</h1>
-        <p className="texto">Calculá estimativamente cuanto mide tu huella de carbono anual en base a tus consumos de combustible, gas, luz y la basura que producís por mes</p>
+        <p className="texto">Calculá estimativamente cuanto mide tu huella de carbono en base a tus consumos de combustible, gas, luz y la basura que producís por mes</p>
         
         <label className="label">Consumo de combustible:
           <input className="input"
@@ -194,7 +194,7 @@ function App() {
               <img className="resultado-imagen" src="/img/semaforo.jpg" alt="Resultado"/>
 
               <div className="resultado-textos">
-                <p className="resultado-numero">{resultado.toFixed(2)}</p>
+                <p className="resultado-numero">{resultado.toFixed(2)} kg CO₂</p>
                 <p className="resultado-mensaje">{mensaje()}</p>
               </div>
             </div> 
