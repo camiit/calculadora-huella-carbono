@@ -166,4 +166,9 @@ input {
   font-size: large;
 }
 
+.link-consejos {
+  color: #1a73e8;       
+  text-decoration: underline;  
+  cursor: pointer;
+}
 

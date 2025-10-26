@@ -198,6 +198,7 @@ function App() {
                 <p className="resultado-mensaje">{mensaje()}</p>
               </div>
             </div> 
+            <a href="/img/consejos.png" className="link-consejos"target="_blank"> Ver consejos para reducir tu huella de carbono</a>
           </div>
         )}
 
