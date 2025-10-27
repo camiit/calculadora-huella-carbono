@@ -172,3 +172,25 @@ input {
   cursor: pointer;
 }
 
+.label-text {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: large;
+}
+
+.tooltip-icon {
+  cursor: pointer;
+  color: #0077b6;
+  font-size: 1.2rem;
+}
+
+.tooltip-list {
+  padding-left: 1.2rem;
+  list-style-type: disc;
+}
+
+.custom-tooltip {          
+  max-width: 300px;
+}
+

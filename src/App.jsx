@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { AiOutlineQuestionCircle } from "react-icons/ai"; 
+import { Tooltip } from "react-tooltip";
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { supabase } from './supabaseClient.js'
@@ -125,7 +127,11 @@ function App() {
         <h1 className="titulo">Calculadora Huella de Carbono</h1>
         <p className="texto">Calculá estimativamente cuanto mide tu huella de carbono en base a tus consumos de combustible, gas, luz y la basura que producís por mes</p>
         
-        <label className="label">Consumo de combustible:
+        <label className="label">
+          <div className="label-text">
+            Consumo de combustible:
+            <AiOutlineQuestionCircle data-tooltip-id="combustible-tooltip" className="tooltip-icon" />
+          </div>
           <input className="input"
             type='number'
             step="any"
@@ -135,9 +141,20 @@ function App() {
             placeholder="L"
             required
           />
+          <Tooltip id="combustible-tooltip" className="custom-tooltip" trigger="click">
+            <ul className="tooltip-list" place="right" effect="solid">
+              <li>Leé tus tickets cuando cargás</li>
+              <li>Estimá cuántos tanques cargás por mes (1 tanque = 40 L aprox.)</li>
+              <li>Calculá cuántos litros equivalen a tu gasto en dinero (según el precio del combustible)</li>
+            </ul>
+          </Tooltip>
         </label>
 
-        <label className="label">Consumo de gas:
+        <label className="label">
+          <div className="label-text">
+            Consumo de gas:
+            <AiOutlineQuestionCircle data-tooltip-id="gas-tooltip" className="tooltip-icon" />
+          </div>
           <input className="input"
             type='number'
             step="any"
@@ -147,9 +164,20 @@ function App() {
             placeholder="m3"
             required
           />
+          <Tooltip id="gas-tooltip" className="custom-tooltip" trigger="click">
+            <ul className="tooltip-list" place="right" effect="solid">
+              <li>Leé tu factura</li>
+              <li>Contá cuántas garrafas comprás</li>
+              <li>Estimá según los artefactos que usás o tu consumo en dinero</li>
+            </ul>
+          </Tooltip>
         </label>
 
-        <label className="label">Consumo de luz:
+        <label className="label">
+          <div className="label-text">
+            Consumo de luz:
+            <AiOutlineQuestionCircle data-tooltip-id="luz-tooltip" className="tooltip-icon" />
+          </div>
           <input className="input"
             type='number'
             step="any"
@@ -159,9 +187,19 @@ function App() {
             placeholder="Kw"
             required
           />
+          <Tooltip id="luz-tooltip" className="custom-tooltip" trigger="click">
+            <ul className="tooltip-list" place="right" effect="solid">
+              <li>Leé tu factura</li>
+              <li>Estimá según los artefactos que usás o tu consumo en dinero</li>
+            </ul>
+          </Tooltip>
         </label>
 
-        <label className="label">Basura producida:
+        <label className="label">
+          <div className="label-text">
+            Basura producida:
+            <AiOutlineQuestionCircle data-tooltip-id="basura-tooltip" className="tooltip-icon" />
+          </div>
           <input className="input"
             type='number'
             step="any"
@@ -171,9 +209,18 @@ function App() {
             placeholder="Kg"
             required
           />
+          <Tooltip id="basura-tooltip" className="custom-tooltip" trigger="click">
+            <ul className="tooltip-list" place="right" effect="solid">
+              <li>Estimá cuántos kg de basura no reciclable sacás por día y multiplicá por 30 (1 bolsa de supermercado = 1 kg aprox. - 1 bolsa de consorcio mediana 3 kg aprox.)</li>
+            </ul>
+          </Tooltip>
         </label>
 
-        <label className="label">Cantidad de personas:
+        <label className="label">
+          <div className="label-text">
+            Cantidad de personas:
+            <AiOutlineQuestionCircle data-tooltip-id="personas-tooltip" className="tooltip-icon" />
+          </div>
           <input className="input"
             type='number'
             step="1"
@@ -182,6 +229,11 @@ function App() {
             onChange={(e) => setPersonas(e.target.value)}
             required
           />
+          <Tooltip id="personas-tooltip" className="custom-tooltip" trigger="click">
+            <ul className="tooltip-list" place="right" effect="solid">
+              <li>Poné cuántas personas habitan frecuentemente tu casa, sin contar mascotas</li>
+            </ul>
+          </Tooltip>
         </label>
 
         <button className="btn-calcular" type="submit">Calcular</button>
