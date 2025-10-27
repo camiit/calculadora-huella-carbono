@@ -142,7 +142,7 @@ function App() {
             placeholder="L"
             required
           />
-          <Tooltip id="combustible-tooltip" className="custom-tooltip" openOnClick closeOnScroll>
+          <Tooltip id="combustible-tooltip" className="custom-tooltip" place="right" openOnClick closeOnScroll>
             <ul className="tooltip-list" place="right" effect="solid">
               <li>Leé tus tickets cuando cargás</li>
               <li>Estimá cuántos tanques cargás por mes (1 tanque = 40 L aprox.)</li>
@@ -165,7 +165,7 @@ function App() {
             placeholder="m3"
             required
           />
-          <Tooltip id="gas-tooltip" className="custom-tooltip" openOnClick closeOnScroll>
+          <Tooltip id="gas-tooltip" className="custom-tooltip" place="right" openOnClick closeOnScroll>
             <ul className="tooltip-list" place="right" effect="solid">
               <li>Leé tu factura</li>
               <li>Contá cuántas garrafas comprás</li>
@@ -188,7 +188,7 @@ function App() {
             placeholder="Kw"
             required
           />
-          <Tooltip id="luz-tooltip" className="custom-tooltip" openOnClick closeOnScroll>
+          <Tooltip id="luz-tooltip" className="custom-tooltip" place="right" openOnClick closeOnScroll>
             <ul className="tooltip-list" place="right" effect="solid">
               <li>Leé tu factura</li>
               <li>Estimá según los artefactos que usás o tu consumo en dinero</li>
@@ -210,7 +210,7 @@ function App() {
             placeholder="Kg"
             required
           />
-          <Tooltip id="basura-tooltip" className="custom-tooltip" openOnClick closeOnScroll>
+          <Tooltip id="basura-tooltip" className="custom-tooltip" place="right" openOnClick closeOnScroll>
             <ul className="tooltip-list" place="right" effect="solid">
               <li>Estimá cuántos kg de basura no reciclable sacás por día y multiplicá por 30 (1 bolsa de supermercado = 1 kg aprox. - 1 bolsa de consorcio mediana 3 kg aprox.)</li>
             </ul>
@@ -230,7 +230,7 @@ function App() {
             onChange={(e) => setPersonas(e.target.value)}
             required
           />
-          <Tooltip id="personas-tooltip" className="custom-tooltip" openOnClick closeOnScroll>
+          <Tooltip id="personas-tooltip" className="custom-tooltip" place="right" openOnClick closeOnScroll>
             <ul className="tooltip-list" place="right" effect="solid">
               <li>Poné cuántas personas habitan frecuentemente tu casa, sin contar mascotas</li>
             </ul>
